@@ -9,7 +9,8 @@ class PictureStream extends React.Component {
     super(props);
 
     this.state = {
-      columnCount: 3
+      columnCount: 3,
+      page: 1
     };
 
     this._determineSize = this._determineSize.bind(this);
@@ -20,7 +21,7 @@ class PictureStream extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchPictures();
+    this.props.fetchPictures({page: 1});
   }
 
   componentWillUpdate() {
@@ -41,7 +42,6 @@ class PictureStream extends React.Component {
 
   _determineSize() {
     let el = document.getElementById("picture-stream-outer-container");
-    console.log(el.offsetWidth);
     return el.offsetWidth;
   }
 
@@ -70,7 +70,6 @@ class PictureStream extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     const pictures = this.props.pictures.photos;
     if (pictures) {
       let columns = [];
@@ -80,7 +79,7 @@ class PictureStream extends React.Component {
         columnHeights[i] = 0;
       }
       pictures.forEach(picture => {
-        let pictureElement = (<li><PictureTile key={picture.id}
+        let pictureElement = (<li key={picture.id}><PictureTile
           picture={picture} /></li>);
         let pictureHeight = this._calcHeight(picture);
         let shortestColumn = this._findShortestColumn(columnHeights);
@@ -90,7 +89,7 @@ class PictureStream extends React.Component {
       let columnElements = [];
       columns.forEach((column, idx) => {
         columnElements.push(
-          <ul>
+          <ul key={`column-${idx}`}>
             {columns[idx]}
           </ul>
         );
