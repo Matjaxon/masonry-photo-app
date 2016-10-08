@@ -5,7 +5,8 @@ import { fetchPictures,
        } from '../../actions/picture_stream_actions';
 
 const mapStateToProps = (state) => ({
-  pictures: state.pictureStream.pictures
+  pictures: state.pictureStream.pictures,
+  favorites: state.pictureStream.favorites
 });
 
 const mapDispatchToProps = (dispatch) => ({

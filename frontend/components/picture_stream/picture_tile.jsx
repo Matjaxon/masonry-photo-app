@@ -4,7 +4,7 @@ class PictureTile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorited: false
+      favorited: this.props.isFavorite
     };
     this._toggleFavorite = this._toggleFavorite.bind(this);
   }

@@ -22,6 +22,7 @@ class PictureStream extends React.Component {
     this._setResizeListener = this._setResizeListener.bind(this);
     this._setScrollListener = this._setScrollListener.bind(this);
     this._getMorePictures = this._getMorePictures.bind(this);
+    this._getFavoritePictures = this._getFavoritePictures.bind(this);
   }
 
   componentWillMount() {
@@ -92,8 +93,15 @@ class PictureStream extends React.Component {
     });
   }
 
+  _getFavoritePictures() {
+    let favorites = this.props.favorites;
+    let keys = Object.keys(favorites);
+    return keys.map(key => favorites[key]);
+  }
+
   render() {
-    const pictures = this.props.pictures.photos;
+    const pictures = (this.props.onlyFavorites) ?
+      this._getFavoritePictures() : this.props.pictures.photos;
     if (pictures) {
       let columns = [];
       let columnHeights = {};
@@ -108,7 +116,8 @@ class PictureStream extends React.Component {
             <PictureTile picture={picture}
               pictureWidth={PICTURE_WIDTH}
               columnSize={COLUMN_SIZE}
-              toggleFavorite={this.props.toggleFavorite}/>
+              toggleFavorite={this.props.toggleFavorite}
+              isFavorite={(this.props.favorites[picture.id] ? true : false)}/>
           </li>);
 
         /*

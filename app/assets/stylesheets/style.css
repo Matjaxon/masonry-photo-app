@@ -82,8 +82,36 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .favorites-container {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   margin-right: 5%;
+  padding: 10px;
 }
+
+.favorites-toggle-container {
+  width: 40px;
+  padding: 10px;
+}
+
+.favorites-toggle-bar {
+  background-color: #78adad;
+  min-width: 30px;
+  position: relative;
+  height: 15px;
+}
+
+.favorites-toggle {
+  position: absolute;
+  background-color: white;
+  border-radius: 25px;
+  color: black;
+  padding: 4px;
+  top: -20%;
+  transition: all 0.2s ease;
+}
+
 
 .sticky-nav {
   z-index: 100;
