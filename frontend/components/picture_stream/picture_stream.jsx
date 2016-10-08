@@ -1,27 +1,29 @@
 import React from 'react';
 import PictureTile from './picture_tile';
 
-const ColumnSize = 250;
-const PictureWidth = 230;
+const COLUMN_SIZE = 300;
+const PICTURE_WIDTH = 280;
 
 class PictureStream extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      columnCount: 3,
+      columnCount: 1,
       page: 1
     };
+    this.minColumnHeight = 0;
 
     this._determineSize = this._determineSize.bind(this);
     this._determineColumns = this._determineColumns.bind(this);
     this._calcHeight = this._calcHeight.bind(this);
     this._findShortestColumn = this._findShortestColumn.bind(this);
     this._setResizeListener = this._setResizeListener.bind(this);
+    this._setScrollListener = this._setScrollListener.bind(this);
   }
 
   componentWillMount() {
-    this.props.fetchPictures({page: 1});
+    this.props.fetchPictures({page: this.state.page});
   }
 
   componentWillUpdate() {
@@ -30,11 +32,12 @@ class PictureStream extends React.Component {
 
   componentDidMount() {
     this._setResizeListener();
+    this._setScrollListener();
   }
 
   _determineColumns() {
     let componentSize = this._determineSize();
-    let columnCount = parseInt(componentSize / ColumnSize);
+    let columnCount = parseInt(componentSize / COLUMN_SIZE);
     if (columnCount !== this.state.columnCount) {
       this.setState({columnCount});
     }
@@ -52,7 +55,7 @@ class PictureStream extends React.Component {
 
   _calcHeight(picture) {
     let ratio = picture.height / picture.width;
-    let pictureHeight = PictureWidth * ratio;
+    let pictureHeight = PICTURE_WIDTH * ratio;
     return pictureHeight;
   }
 
@@ -69,6 +72,17 @@ class PictureStream extends React.Component {
     return shortestColumn;
   }
 
+  _setScrollListener() {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > this.minColumnHeight) {
+        let page = this.state.page;
+        page += 1;
+        this.props.fetchPictures({page});
+        this.setState({page});
+      }
+    });
+  }
+
   render() {
     const pictures = this.props.pictures.photos;
     if (pictures) {
@@ -79,8 +93,10 @@ class PictureStream extends React.Component {
         columnHeights[i] = 0;
       }
       pictures.forEach(picture => {
-        let pictureElement = (<li key={picture.id}><PictureTile
-          picture={picture} /></li>);
+        let pictureElement = (<li key={picture.id}>
+            <PictureTile picture={picture} pictureWidth={PICTURE_WIDTH}
+              columnSize={COLUMN_SIZE}/>
+          </li>);
         let pictureHeight = this._calcHeight(picture);
         let shortestColumn = this._findShortestColumn(columnHeights);
         columns[shortestColumn].push(pictureElement);
@@ -89,11 +105,13 @@ class PictureStream extends React.Component {
       let columnElements = [];
       columns.forEach((column, idx) => {
         columnElements.push(
-          <ul key={`column-${idx}`}>
+          <ul className="picture-stream-column" key={`column-${idx}`}>
             {columns[idx]}
           </ul>
         );
       });
+      this.minColumnHeight = columnHeights[this._findShortestColumn(columnHeights)];
+
       return (
         <div className="picture-stream-container" id="picture-stream">
           {columnElements}

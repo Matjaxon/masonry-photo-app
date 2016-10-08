@@ -53,6 +53,7 @@
  	display: block;
  	clear: both;
  }
+
  * {
  	box-sizing: border-box;
  }
@@ -89,6 +90,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .sidebar {
+ position: fixed;
  display: flex;
  flex-direction: column;
  justify-content: center;
@@ -97,6 +99,7 @@ input[type=number]::-webkit-outer-spin-button {
  background-color: #78adad;
  padding: 10px;
  height: 100vh;
+ margin-right: 15px;
 }
 
 .sidebar a {
@@ -106,11 +109,22 @@ input[type=number]::-webkit-outer-spin-button {
 
 #picture-stream-outer-container {
   width: 100%;
+  margin-left: 60px;
+  padding-top: 15px;
+  padding-left: 15px;
 }
 
 .picture-stream-container {
   width: 100%;
   display: flex;
+  margin: 0 auto;
+}
+
+.picture-stream-column:last-of-type {
+  margin-right: auto;
+}
+.picture-stream-column:first-of-type {
+  margin-left: auto;
 }
 
 .picture-tile-container {
@@ -121,7 +135,6 @@ input[type=number]::-webkit-outer-spin-button {
   display:flex;
   position: relative;
   flex-direction: column;
-  width: 250px;
   padding: 10px;
   z-index: inherit;
 }
@@ -143,7 +156,6 @@ input[type=number]::-webkit-outer-spin-button {
   top: 0;
   margin-left: auto;
   margin-right: auto;
-  width: 250px;
   height: 100%;
   display: flex;
   justify-content: center;

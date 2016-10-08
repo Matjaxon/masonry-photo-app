@@ -5,7 +5,7 @@ export const fetchPictures = (req, success, failure) => {
   data['feature'] = 'popular';
   data['image_size'] = 31;
   data['nsfw'] = false;
-  data['rpp'] = 100;
+  data['rpp'] = 40;
   $.ajax({
     method: "GET",
     url: `https://api.500px.com/v1/photos`,

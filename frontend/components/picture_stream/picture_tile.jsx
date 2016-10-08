@@ -1,8 +1,8 @@
 import React from 'react';
 
-const PictureTile = ({ picture }) => {
+const PictureTile = ({ picture, pictureWidth, columnSize }) => {
   return(
-    <div className="picture-tile">
+    <div className="picture-tile" style={{width: `${columnSize}px`}}>
       <div>
         <div className="picture-box">
           <img src={`${picture.image_url}`}></img>
@@ -16,7 +16,7 @@ const PictureTile = ({ picture }) => {
           </div>
         </div>
       </div>
-      <div className="picture-views">
+      <div className="picture-views" style={{width: `${pictureWidth}px`}}>
         {picture.times_viewed} views
       </div>
     </div>
