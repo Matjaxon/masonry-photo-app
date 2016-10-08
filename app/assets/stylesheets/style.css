@@ -14,7 +14,7 @@
  	outline: 0;
  	font-weight: inherit;
  	font-style: inherit;
- 	font-size: 100%;
+ 	font-size: 14px;
   font-family: 'Raleway', sans-serif;
  	vertical-align: baseline;
   text-decoration: none;
@@ -80,6 +80,10 @@ input[type=number]::-webkit-outer-spin-button {
   padding: 10px;
 }
 
+.sticky-nav {
+  z-index: 100;
+}
+
 .content-section {
   display: flex;
 }
@@ -91,8 +95,8 @@ input[type=number]::-webkit-outer-spin-button {
  align-items: center;
  color: white;
  background-color: #78adad;
- padding: 20px;
- height: 90vh;
+ padding: 10px;
+ height: 100vh;
 }
 
 .sidebar a {
@@ -100,15 +104,76 @@ input[type=number]::-webkit-outer-spin-button {
  margin: 10vh 0;
 }
 
+#picture-stream-outer-container {
+  width: 100%;
+}
+
+.picture-stream-container {
+  width: 100%;
+  display: flex;
+}
+
+.picture-tile-container {
+  position: relative;
+}
+
 .picture-tile {
   display:flex;
-  width: 200px;
-  border: 1px solid red;
+  position: relative;
+  flex-direction: column;
+  width: 250px;
+  padding: 10px;
+  z-index: inherit;
+}
+
+.picture-tile:hover .picture-views {
+  opacity: 1;
 }
 
 .picture-box img {
-  flex-grow: 1;
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+.picture-views {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 250px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  text-shadow: 0px 2px 3px rgba(150, 150, 150, 1);
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.picture-details {
+  display: flex;
+  padding-top: 10px;
+  flex-grow: 1;
+}
+
+.picture-title {
+  width: 85%;
+}
+
+.picture-favorite {
+  display: flex;
+  justify-content: center;
+  width: 15%;
+  color: #5a6773;
+  transition: all 0.2s ease;
+}
+
+.picture-favorite:hover {
+  color: #e60000;
 }
