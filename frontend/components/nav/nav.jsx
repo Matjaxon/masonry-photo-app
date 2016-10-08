@@ -10,7 +10,7 @@ class Nav extends React.Component {
         <StickyContainer >
           <Sticky className="sticky-nav">
             <div className="favorites-container">
-              Favorites
+              Favorites: {Object.keys(this.props.favorites).length}
             </div>
           </Sticky>
           <section className="content-section">

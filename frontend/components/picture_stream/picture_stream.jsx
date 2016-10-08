@@ -26,19 +26,19 @@ class PictureStream extends React.Component {
     this.props.fetchPictures({page: this.state.page});
   }
 
-  componentWillUpdate() {
-    this._determineColumns();
-  }
-
   componentDidMount() {
     this._setResizeListener();
     this._setScrollListener();
   }
 
+  componentWillUpdate() {
+    this._determineColumns();
+  }
+
   _determineColumns() {
     let componentSize = this._determineSize();
     let columnCount = parseInt(componentSize / COLUMN_SIZE);
-    if (columnCount !== this.state.columnCount) {
+    if (columnCount !== this.state.columnCount && columnCount > 0) {
       this.setState({columnCount});
     }
   }
@@ -94,8 +94,10 @@ class PictureStream extends React.Component {
       }
       pictures.forEach(picture => {
         let pictureElement = (<li key={picture.id}>
-            <PictureTile picture={picture} pictureWidth={PICTURE_WIDTH}
-              columnSize={COLUMN_SIZE}/>
+            <PictureTile picture={picture}
+              pictureWidth={PICTURE_WIDTH}
+              columnSize={COLUMN_SIZE}
+              toggleFavorite={this.props.toggleFavorite}/>
           </li>);
         let pictureHeight = this._calcHeight(picture);
         let shortestColumn = this._findShortestColumn(columnHeights);
@@ -110,7 +112,9 @@ class PictureStream extends React.Component {
           </ul>
         );
       });
-      this.minColumnHeight = columnHeights[this._findShortestColumn(columnHeights)];
+
+      let shortestColumn = this._findShortestColumn(columnHeights);
+      this.minColumnHeight = columnHeights[shortestColumn];
 
       return (
         <div className="picture-stream-container" id="picture-stream">

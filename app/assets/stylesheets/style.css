@@ -137,6 +137,8 @@ input[type=number]::-webkit-outer-spin-button {
   flex-direction: column;
   padding: 10px;
   z-index: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .picture-tile:hover .picture-views {
@@ -178,14 +180,6 @@ input[type=number]::-webkit-outer-spin-button {
   width: 85%;
 }
 
-.picture-favorite {
-  display: flex;
-  justify-content: center;
-  width: 15%;
-  color: #5a6773;
-  transition: all 0.2s ease;
-}
-
-.picture-favorite:hover {
-  color: #e60000;
+.favorited {
+  background-color: #cde1e1;
 }
