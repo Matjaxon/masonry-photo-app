@@ -1,8 +1,8 @@
 import React from 'react';
 import PictureTile from './picture_tile';
 
-const COLUMN_SIZE = 300;
-const PICTURE_WIDTH = 280;
+const COLUMN_SIZE = 250;
+const PICTURE_WIDTH = 230;
 
 class PictureStream extends React.Component {
   constructor(props) {
@@ -20,6 +20,7 @@ class PictureStream extends React.Component {
     this._findShortestColumn = this._findShortestColumn.bind(this);
     this._setResizeListener = this._setResizeListener.bind(this);
     this._setScrollListener = this._setScrollListener.bind(this);
+    this._getMorePictures = this._getMorePictures.bind(this);
   }
 
   componentWillMount() {
@@ -33,6 +34,13 @@ class PictureStream extends React.Component {
 
   componentWillUpdate() {
     this._determineColumns();
+  }
+
+  _getMorePictures() {
+    let page = this.state.page;
+    page += 1;
+    this.props.fetchPictures({page});
+    this.setState({page});
   }
 
   _determineColumns() {
@@ -75,10 +83,7 @@ class PictureStream extends React.Component {
   _setScrollListener() {
     window.addEventListener("scroll", () => {
       if (window.scrollY > this.minColumnHeight) {
-        let page = this.state.page;
-        page += 1;
-        this.props.fetchPictures({page});
-        this.setState({page});
+        this._getMorePictures();
       }
     });
   }
@@ -88,6 +93,7 @@ class PictureStream extends React.Component {
     if (pictures) {
       let columns = [];
       let columnHeights = {};
+      let that = this;
       for(let i = 0; i < this.state.columnCount; i++) {
         columns[i] = [];
         columnHeights[i] = 0;
@@ -114,7 +120,13 @@ class PictureStream extends React.Component {
       });
 
       let shortestColumn = this._findShortestColumn(columnHeights);
-      this.minColumnHeight = columnHeights[shortestColumn];
+
+      /*
+      For inifite scroll to trigger when zoomed out, the minColumnHeight
+      is reduced by a factor that will trigger the picture call sooner.
+      */
+      let heightReducer = 0.6;
+      this.minColumnHeight = columnHeights[shortestColumn] * heightReducer;
 
       return (
         <div className="picture-stream-container" id="picture-stream">
