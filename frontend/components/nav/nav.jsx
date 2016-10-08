@@ -9,8 +9,10 @@ class Nav extends React.Component {
       <div>
         <StickyContainer >
           <Sticky className="sticky-nav">
-            <div className="favorites-container">
-              Favorites: {Object.keys(this.props.favorites).length}
+            <div className="nav-header">
+              <div className="favorites-container">
+                Favorites: {Object.keys(this.props.favorites).length}
+              </div>
             </div>
           </Sticky>
           <section className="content-section">

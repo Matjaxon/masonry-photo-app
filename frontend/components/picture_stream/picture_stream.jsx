@@ -14,6 +14,7 @@ class PictureStream extends React.Component {
     };
     this.minColumnHeight = 0;
 
+    // Bind class methods
     this._determineSize = this._determineSize.bind(this);
     this._determineColumns = this._determineColumns.bind(this);
     this._calcHeight = this._calcHeight.bind(this);
@@ -56,11 +57,6 @@ class PictureStream extends React.Component {
     return el.offsetWidth;
   }
 
-  _setResizeListener() {
-    let el = document.getElementById("picture-stream-outer-container");
-    window.addEventListener("resize", this._determineColumns);
-  }
-
   _calcHeight(picture) {
     let ratio = picture.height / picture.width;
     let pictureHeight = PICTURE_WIDTH * ratio;
@@ -71,13 +67,21 @@ class PictureStream extends React.Component {
     let keys = Object.keys(heights);
     let shortestColumn = null;
     let shortestColumnHeight = Infinity;
+
     keys.forEach(key => {
       if (heights[key] < shortestColumnHeight) {
         shortestColumn = key;
         shortestColumnHeight = heights[key];
       }
     });
+
     return shortestColumn;
+  }
+
+  // Assign event listeners.  Call methods after component is mounted.
+  _setResizeListener() {
+    let el = document.getElementById("picture-stream-outer-container");
+    window.addEventListener("resize", this._determineColumns);
   }
 
   _setScrollListener() {
@@ -93,11 +97,12 @@ class PictureStream extends React.Component {
     if (pictures) {
       let columns = [];
       let columnHeights = {};
-      let that = this;
+
       for(let i = 0; i < this.state.columnCount; i++) {
         columns[i] = [];
         columnHeights[i] = 0;
       }
+
       pictures.forEach(picture => {
         let pictureElement = (<li key={picture.id}>
             <PictureTile picture={picture}
@@ -105,11 +110,22 @@ class PictureStream extends React.Component {
               columnSize={COLUMN_SIZE}
               toggleFavorite={this.props.toggleFavorite}/>
           </li>);
-        let pictureHeight = this._calcHeight(picture);
+
+        /*
+        Approximate which column is the shortest currently based on the height
+        of the pictures in that column (title text isn't taken into account).
+        Then, determine picture's visible height after filling available width.
+        Add the height to the hash and update the minimum column variable.
+        Can be optimized with a priority queue if performance becomes sluggish
+        from iterations but since column count should be minimal it shouldn't be
+        necessary.
+        */
         let shortestColumn = this._findShortestColumn(columnHeights);
+        let pictureHeight = this._calcHeight(picture);
         columns[shortestColumn].push(pictureElement);
         columnHeights[shortestColumn] += pictureHeight;
       });
+
       let columnElements = [];
       columns.forEach((column, idx) => {
         columnElements.push(
@@ -125,8 +141,8 @@ class PictureStream extends React.Component {
       For inifite scroll to trigger when zoomed out, the minColumnHeight
       is reduced by a factor that will trigger the picture call sooner.
       */
-      let heightReducer = 0.6;
-      this.minColumnHeight = columnHeights[shortestColumn] * heightReducer;
+      let heightReductionFactor = 0.6;
+      this.minColumnHeight = columnHeights[shortestColumn] * heightReductionFactor;
 
       return (
         <div className="picture-stream-container" id="picture-stream">
