@@ -4,13 +4,13 @@ class PictureTile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorited: this.props.isFavorite
+      isFavorite: this.props.isFavorite
     };
     this._toggleFavorite = this._toggleFavorite.bind(this);
   }
 
   _toggleFavorite() {
-    this.setState({favorited: !this.state.favorited});
+    this.setState({isFavorite: !this.state.isFavorite});
     this.props.toggleFavorite(this.props.picture);
   }
 
@@ -18,9 +18,9 @@ class PictureTile extends React.Component {
     let picture = this.props.picture;
     let pictureWidth = this.props.pictureWidth;
     let columnSize = this.props.columnSize;
-    let isFavorited = this.state.favorited;
+    let isFavorite = this.state.isFavorite;
     return(
-      <div className={`picture-tile${(isFavorited) ? " favorited" : ""}`}
+      <div className={`picture-tile${(isFavorite) ? " favorite" : ""}`}
         style={{width: `${columnSize}px`}}
         onClick={this._toggleFavorite}>
         <div>

@@ -1,4 +1,4 @@
-/* RESET */
+ /* RESET */
 
  html, body, div, span, applet, object, iframe,
  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -90,6 +90,10 @@ input[type=number]::-webkit-outer-spin-button {
   padding: 10px;
 }
 
+.favorites-counter {
+  padding-right: 20px;
+}
+
 .favorites-toggle-container {
   width: 40px;
   padding: 10px;
@@ -109,9 +113,8 @@ input[type=number]::-webkit-outer-spin-button {
   color: black;
   padding: 4px;
   top: -20%;
-  transition: all 0.2s ease;
+  cursor: pointer;
 }
-
 
 .sticky-nav {
   z-index: 100;
@@ -212,6 +215,6 @@ input[type=number]::-webkit-outer-spin-button {
   width: 85%;
 }
 
-.favorited {
+.favorite {
   background-color: #cde1e1;
 }

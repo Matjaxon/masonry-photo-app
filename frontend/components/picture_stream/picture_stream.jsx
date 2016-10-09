@@ -117,7 +117,7 @@ class PictureStream extends React.Component {
               pictureWidth={PICTURE_WIDTH}
               columnSize={COLUMN_SIZE}
               toggleFavorite={this.props.toggleFavorite}
-              isFavorite={(this.props.favorites[picture.id] ? true : false)}/>
+              isFavorite={(this.props.favorites[picture.id]) ? true : false}/>
           </li>);
 
         /*
@@ -135,6 +135,7 @@ class PictureStream extends React.Component {
         columnHeights[shortestColumn] += pictureHeight;
       });
 
+      // Turn the column arrays into unordered lists to be rendered.
       let columnElements = [];
       columns.forEach((column, idx) => {
         columnElements.push(
@@ -144,13 +145,12 @@ class PictureStream extends React.Component {
         );
       });
 
-      let shortestColumn = this._findShortestColumn(columnHeights);
-
       /*
       For inifite scroll to trigger when zoomed out, the minColumnHeight
       is reduced by a factor that will trigger the picture call sooner.
       */
       let heightReductionFactor = 0.6;
+      let shortestColumn = this._findShortestColumn(columnHeights);
       this.minColumnHeight = columnHeights[shortestColumn] * heightReductionFactor;
 
       return (
