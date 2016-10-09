@@ -14,15 +14,19 @@ module.exports = {
     loaders: [
       {
         test: [/\.jsx?$/, /\.js?$/],
+        loader: 'babel-loader',
         exclude: /node_modules/,
-        loader: 'babel',
         query: {
           presets: ["es2015","react"]
         }
-      }
+      },
+      { test: /\.css$/, loader: "style!css" },
+      { test: /\.(png|jpg|jpeg|gif|woff)$/, loader: 'url?limit=8192' },
+      { test: /\.(otf|eot|ttf)$/, loader: "file?prefix=font/" },
+      { test: /\.svg$/, loader: "file" }
     ]
   },
-  devtool: 'source-maps',
+  devtool: 'source-map',
   resolve: {
     extensions: ["", ".js", ".jsx" ]
   }
