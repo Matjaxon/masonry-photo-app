@@ -17,7 +17,6 @@ class Nav extends React.Component {
     this.setState({onlyFavorites: !this.state.onlyFavorites});
   }
 
-
   render() {
     let favoritesFilterOnStyle = {
       right: "-20%"
