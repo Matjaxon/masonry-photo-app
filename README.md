@@ -150,7 +150,7 @@ const PictureStreamReducer = (state = defaultState, action) => {
 
 ### Topbar
 
-The top of the application features a stick nav bar that tracks the number of photos the user has favorited.
+The top of the application features a sticky nav bar that tracks the number of photos the user has favorited.
 
 #### Favorites Filter Toggle
 
