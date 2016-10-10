@@ -4,7 +4,6 @@ export const fetchPictures = (req, success, failure) => {
   data['consumer_key'] = consumerKey;
   data['feature'] = 'popular';
   data['image_size'] = 31;
-  data['nsfw'] = false;
   data['rpp'] = 40;
   $.ajax({
     method: "GET",

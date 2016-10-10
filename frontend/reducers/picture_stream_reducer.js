@@ -18,7 +18,7 @@ const PictureStreamReducer = (state = defaultState, action) => {
 
     case PictureStreamConstants.TOGGLE_FAVORITE:
       newState = merge({}, state);
-      if (newState.favorites[action.picture.id]) { //alread favorited
+      if (newState.favorites[action.picture.id]) { //already favorited
         delete newState.favorites[action.picture.id];
       } else {
         newState.favorites[action.picture.id] = action.picture;
