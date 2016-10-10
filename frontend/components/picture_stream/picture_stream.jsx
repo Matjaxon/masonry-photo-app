@@ -110,7 +110,6 @@ class PictureStream extends React.Component {
         columns[i] = [];
         columnHeights[i] = 0;
       }
-
       pictures.forEach(picture => {
         let pictureElement = (<li key={picture.id}>
             <PictureTile picture={picture}
@@ -152,7 +151,6 @@ class PictureStream extends React.Component {
       let heightReductionFactor = 0.6;
       let shortestColumn = this._findShortestColumn(columnHeights);
       this.minColumnHeight = columnHeights[shortestColumn] * heightReductionFactor;
-
       return (
         <div className="picture-stream-container" id="picture-stream">
           {columnElements}
