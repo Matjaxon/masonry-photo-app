@@ -7,6 +7,8 @@ the page.  Additionally, clicking on a photo marks it as favorited.  A
 count of the user's favorites is maintained in the header bar and a toggle
 has been included to only show favorited pictures.
 
+![](http://res.cloudinary.com/dbwkodu79/image/upload/v1476080022/masonry_photo_app/Screen_Shot_2016-10-09_at_11.12.04_PM.png)
+
 ## Redux Implementation
 
 This application was constructed following the Redux pattern.  A central data is maintained and specific components are subscribed to the store, listening for specific state changes.  When any of those states change, new props are fed to the components and they re-render as needed.
